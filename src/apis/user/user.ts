@@ -56,3 +56,21 @@ export const updateUserInfo = async (userData: {
     throw new Error(`Error during request: ${error.message}`);
   }
 };
+
+//delete user
+export const getDeleteUser = async ( id: string ) => {
+  // API endpoint for getting the delete user
+  const URL = `/api/user/${id}`;
+
+  try {
+    const response = await axios.delete(URL);
+    if (response.status == 200) {
+      return response.data.message; // Return the user data
+    } else {
+      // Handle failure
+      throw new Error(`Failed: ${response.data.message}`);
+    }
+  } catch (error: any) {
+    throw new Error(`Error during request: ${error.message}`);
+  }
+};

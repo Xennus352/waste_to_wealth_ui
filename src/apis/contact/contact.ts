@@ -41,7 +41,7 @@ export const deleteFeedback = async (id: string) => {
   try {
     // API for updating user information
     const URL = `/api/feedback/${id}`;
-    const response = await axios.post(URL, id);
+    const response = await axios.delete(URL);
 
     if (response.status == 200) {
       return response.data.message;

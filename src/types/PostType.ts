@@ -5,11 +5,11 @@ export interface PostType {
   contentBurmese?: string | null;
   image?: string | null;
   type: string;
-  useful: boolean;
   isApproved: boolean;
   userId?: string | null;
   Comment: CommentType[];
   Like: LikeType[];
+  Useful: UsefulType[];
   Save: SaveType[];
   User?: UserType | null;
   createdAt: Date;
@@ -44,11 +44,40 @@ export interface LikeType {
   updatedAt: string;
   userId: string;
 }
+export interface UsefulType {
+  createdAt: string;
+  id: string;
+  postId: string;
+  updatedAt: string;
+  userId: string;
+}
 
 export interface SaveType {
-  // Define the structure of SaveType here
+  createdAt: string;
+  id: string;
+  postId: string;
+  updatedAt: string;
+  userId: string;
 }
 
 export interface UserType {
-  // Define the structure of UserType here
+  PhoneNumber: string;
+  ProfilePic: string;
+  address: string;
+  bio: string;
+  createdAt: string;
+  email: string;
+  id: string;
+  name: string;
+  role: string;
+  updatedAt: string;
+}
+
+export interface FeedbackType {
+  id: string;
+  content: string;
+  userId: string;
+  User: UserType ;
+  createdAt: string;
+  updatedAt: string;
 }

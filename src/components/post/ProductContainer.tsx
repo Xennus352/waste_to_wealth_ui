@@ -1,12 +1,11 @@
-import { useGetAllPosts } from "@/react-query/post/post";
-import { PostType } from "@/types/PostType";
-import PostCard from "../cards/PostCard";
+import { ProductType } from "@/types/ProductType";
 import { Unplug } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import ProductCard from "../cards/ProductCard";
+import { useGetAllProducts } from "@/react-query/market/market";
 
-const PostContainer = () => {
-  const { data: posts, isLoading, isError } = useGetAllPosts();
-
+const ProductContainer = () => {
+  const { data: products, isLoading, isError } = useGetAllProducts();
   // handle loading state
   if (isLoading) {
     return (
@@ -43,7 +42,7 @@ const PostContainer = () => {
   if (isError) {
     return (
       <div className="text-destructive h-44 text-center text-3xl flex flex-col items-center justify-center gap-3">
-        <p>Something went wrong while getting posts!</p>
+        <p>Something went wrong while getting products!</p>
         <div>
           <Unplug size={50} />
         </div>
@@ -52,18 +51,20 @@ const PostContainer = () => {
   }
 
   // checking approve
-  const approvedPosts = posts?.filter(
-    (post: PostType) => post.isApproved == true
-  );
+  // const approvedPosts = products?.filter(
+  //   (product: PostType) => product.isApproved == true
+  // );
+
+  // show data without approve
   return (
     <div>
-      {approvedPosts?.map((post: PostType) => (
-        <div key={post.id}>
-          <PostCard post={post} />
+      {products?.map((product: ProductType) => (
+        <div key={product.id}>
+          <ProductCard product={product} />
         </div>
       ))}
     </div>
   );
 };
 
-export default PostContainer;
+export default ProductContainer;

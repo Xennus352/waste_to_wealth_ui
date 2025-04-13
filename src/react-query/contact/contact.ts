@@ -10,7 +10,7 @@ export const useGetAllFeedbacks = () => {
   return useQuery({
     queryKey: ["all-feedbacks"],
     queryFn: getAllFeedbacks,
-    refetchInterval: 10000,
+    refetchInterval: 1000,
     staleTime: 5000,
   });
 };

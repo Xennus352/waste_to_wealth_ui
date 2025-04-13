@@ -14,7 +14,14 @@ import AdminFeed from "./pages/admin/AdminFeed";
 import Profile from "./pages/Profile";
 import SearchPage from "./pages/app/SearchPage";
 import SavePage from "./pages/app/SavePage";
-// import ProtectedRoute from "./utils/ProtectedRoute";
+import MarketPage from "./pages/app/MarketPage";
+import HandmadePage from "./pages/app/HandmadePage";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import CashReceiptPdf from "./components/pdf/CashReceiptPdf";
+import OrderList from "./pages/OrderList";
+import UserList from "./pages/admin/UserList";
+import FeedbackList from "./pages/admin/FeedbackList";
+import HandMade from "./pages/admin/HandMade";
 
 const App = () => {
   return (
@@ -32,17 +39,19 @@ const App = () => {
         <Route
           path="/app"
           element={
-            // <ProtectedRoute>
-            <UserLayout />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <UserLayout />
+            </ProtectedRoute>
           }
         >
           <Route path="feed" element={<Feed />} />
           <Route path="search" element={<SearchPage />} />
-          <Route path="market" element={<Feed />} />
-          <Route path="hand-made-guide" element={<Feed />} />
+          <Route path="market" element={<MarketPage />} />
+          <Route path="order" element={<OrderList />} />
+          <Route path="hand-made-guide" element={<HandmadePage />} />
           <Route path="save" element={<SavePage />} />
           <Route path="setting" element={<Profile />} />
+          <Route path="cash-receipt/:id" element={<CashReceiptPdf />} />
         </Route>
 
         {/* admin routes */}
@@ -54,13 +63,16 @@ const App = () => {
             //</ProtectedRoute>
           }
         >
-          <Route path="blog" element={<AdminFeed />} />
-          <Route path="user" element={<AdminFeed />} />
-          <Route path="market" element={<AdminFeed />} />
-          <Route path="order" element={<AdminFeed />} />
-          <Route path="feedback" element={<AdminFeed />} />
+          <Route path="user" element={<UserList />} />
+          <Route path="market" element={<MarketPage />} />
+          <Route path="order" element={<OrderList />} />
+          <Route path="feed" element={<AdminFeed />} />
+          <Route path="feedback" element={<FeedbackList />} />
+          <Route
+            path="hand-made-guide"
+            element={<HandMade/>}
+          />
           <Route path="setting" element={<Profile />} />
-          <Route path="hand-made-guide" element={<AdminFeed />} />
         </Route>
 
         {/* error route  */}

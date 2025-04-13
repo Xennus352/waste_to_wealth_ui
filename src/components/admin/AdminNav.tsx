@@ -26,7 +26,7 @@ const AdminNav = () => {
       icon: <User />,
     },
     {
-      path: "blog",
+      path: "feed",
       title: "New Feed",
       icon: <House />,
     },

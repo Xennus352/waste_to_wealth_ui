@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 //get all likes
 export const useGetAllLikes = (postId: string) => {
   return useQuery({
-    queryKey: ["all-likes", postId],
+    queryKey: ["all-likes"],
     queryFn: () => getAllLikes(postId),
     refetchInterval: 10000,
   });

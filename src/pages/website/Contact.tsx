@@ -59,6 +59,7 @@ const Contact = () => {
               type="submit"
               variant={"outline"}
               className="hover:cursor-pointer"
+              disabled={!user}
             >
               Submit
             </Button>

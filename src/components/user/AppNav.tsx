@@ -3,6 +3,7 @@ import {
   BookCopy,
   BookMarked,
   House,
+  ListOrdered,
   LogOut,
   ScanSearch,
   Settings,
@@ -35,7 +36,11 @@ const AppNav = () => {
       title: "Market",
       icon: <Store />,
     },
-
+    {
+      path: "order",
+      title: "Order",
+      icon: <ListOrdered />,
+    },
     {
       path: "hand-made-guide",
       title: "Handmade",

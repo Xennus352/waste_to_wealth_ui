@@ -66,38 +66,109 @@ const SearchPage = () => {
       break;
 
     case "most like":
-      // content = sortedFilteredPosts
-      //   ?.filter((post: PostType) => post?.Like && post.Like.length > 0)
-      //   .sort((a: PostType, b: PostType) => b.Like.length - a.Like.length)
-      //   .map((post: PostType, i: string) => {
-      //     return (
-      //       <div key={i}>
-      //         {/* only show when admin is approve  */}
-      //         {post?.isApproved && <PostCard post={post} />}
-      //       </div>
-      //     );
-      //   });
+      content = sortedFilteredPosts
+        ?.filter((post: PostType) => post?.Like && post.Like.length > 0)
+        .sort((a: PostType, b: PostType) => b.Like.length - a.Like.length)
+        .map((post: PostType, i: string) => {
+          return (
+            <div key={i}>
+              {/* only show when admin is approve  */}
+              {post?.isApproved && <PostCard post={post} />}
+            </div>
+          );
+        });
       break;
 
     case "useful":
+     content = sortedFilteredPosts
+       ?.filter((post: PostType) => post?.Useful && post.Useful.length > 0)
+       .sort((a: PostType, b: PostType) => b.Useful.length - a.Useful.length)
+       .map((post: PostType, i: string) => {
+         return (
+           <div key={i}>
+             {/* only show when admin is approve  */}
+             {post?.isApproved && <PostCard post={post} />}
+           </div>
+         );
+       });
       break;
 
     case "ground":
+      content = sortedFilteredPosts?.map((post: PostType, i: string) => {
+        return (
+          <div key={i}>
+            {/* only show when admin is approve  */}
+            {post?.isApproved && post?.type == "ground" && (
+              <PostCard post={post} />
+            )}
+          </div>
+        );
+      });
       break;
 
     case "plastic":
+      content = sortedFilteredPosts?.map((post: PostType, i: string) => {
+        return (
+          <div key={i}>
+            {/* only show when admin is approve  */}
+            {post?.isApproved && post?.type == "plastic" && (
+              <PostCard post={post} />
+            )}
+          </div>
+        );
+      });
       break;
 
     case "paper":
+      content = sortedFilteredPosts?.map((post: PostType, i: string) => {
+        return (
+          <div key={i}>
+            {/* only show when admin is approve  */}
+            {post?.isApproved && post?.type == "paper" && (
+              <PostCard post={post} />
+            )}
+          </div>
+        );
+      });
       break;
 
     case "food":
+      content = sortedFilteredPosts?.map((post: PostType, i: string) => {
+        return (
+          <div key={i}>
+            {/* only show when admin is approve  */}
+            {post?.isApproved && post?.type == "food" && (
+              <PostCard post={post} />
+            )}
+          </div>
+        );
+      });
       break;
 
     case "tire":
+      content = sortedFilteredPosts?.map((post: PostType, i: string) => {
+        return (
+          <div key={i}>
+            {/* only show when admin is approve  */}
+            {post?.isApproved && post?.type == "tire" && (
+              <PostCard post={post} />
+            )}
+          </div>
+        );
+      });
       break;
 
     case "other":
+      content = sortedFilteredPosts?.map((post: PostType, i: string) => {
+        return (
+          <div key={i}>
+            {/* only show when admin is approve  */}
+            {post?.isApproved && post?.type == "other" && (
+              <PostCard post={post} />
+            )}
+          </div>
+        );
+      });
       break;
 
     default:
@@ -145,10 +216,10 @@ const SearchPage = () => {
         })}
       </div>
 
-      <Separator />
+      <Separator className="mt-1" />
 
       {/* cards  */}
-      <div className="m-3 flex flex-col gap-4">
+      <div className="flex flex-col gap-0.5">
         {isError && (
           <p className="text-error text-2xl  flex items-center gap-4 justify-center">
             Failed to fetch data! <Unplug />

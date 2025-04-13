@@ -1,4 +1,9 @@
-import { getAllUsers, getCurrentUser, updateUserInfo } from "@/apis/user/user";
+import {
+  getAllUsers,
+  getCurrentUser,
+  getDeleteUser,
+  updateUserInfo,
+} from "@/apis/user/user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 //get all users
@@ -6,7 +11,7 @@ export const useGetAllUsers = () => {
   return useQuery({
     queryKey: ["all-users"],
     queryFn: getAllUsers,
-    refetchInterval: 10000,
+    refetchInterval: 2000,
   });
 };
 
@@ -15,6 +20,7 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: ["current-user"],
     queryFn: getCurrentUser,
+    retry: 3,
   });
 };
 
@@ -28,6 +34,19 @@ export const useUpdateUser = () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["current-user"] });
       queryClient.refetchQueries({ queryKey: ["current-user"] });
+    },
+  });
+};
+
+//delete user
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => getDeleteUser(id),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["alll-users"] });
+      queryClient.refetchQueries({ queryKey: ["alll-users"] });
     },
   });
 };

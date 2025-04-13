@@ -3,14 +3,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetCurrentUser, useUpdateUser } from "@/react-query/user/user";
+import { Separator } from "@/components/ui/separator";
+import { useGetAllPosts } from "@/react-query/post/post";
+import { PostType } from "@/types/PostType";
+import PostCard from "@/components/cards/PostCard";
 
 const Profile = () => {
   // user info
   const { data: userInfo } = useGetCurrentUser();
 
+  // get post which user posted
+  const { data: postedByCurrentUser } = useGetAllPosts();
+
+  const currentUserPost = postedByCurrentUser?.filter((post: PostType) => {
+    return post?.userId === userInfo?.id;
+  });
+
   // update user info
   const { mutate } = useUpdateUser();
 
+  // handle to sent the information
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -93,6 +105,23 @@ const Profile = () => {
           </div>
         </CardContent>
       </Card>
+
+      <Separator className="mt-2" />
+
+      {/* this is the display section of the current user posts  */}
+
+    {/* <p>Posts</p> */}
+      
+      <div>
+        {currentUserPost &&
+          currentUserPost?.map((post: PostType) => {
+            return (
+              <div key={post.id}>
+                <PostCard post={post} />
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 };
