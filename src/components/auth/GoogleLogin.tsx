@@ -2,7 +2,8 @@ import { Button } from "../ui/button";
 
 const GoogleLogin = () => {
   const oAuthHandle = () => {
-    window.location.href = "http://localhost:8000/auth/google";
+    window.location.href =
+      "https://waste-to-wealth-server.vercel.app/auth/google";
   };
   return (
     <>
@@ -13,7 +14,7 @@ const GoogleLogin = () => {
           oAuthHandle();
         }}
       >
-        Login
+        Google Login
       </Button>
     </>
   );

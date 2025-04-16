@@ -82,7 +82,7 @@ const Footer = () => {
 
             <p>
               Copyright © {new Date().getFullYear()} - All right reserved by
-              <span className="underline"> Waste To Wealth</span>
+              <span className="underline"> Waste To Wealth #crd To All</span>
             </p>
           </div>
         </div>
