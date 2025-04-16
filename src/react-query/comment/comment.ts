@@ -6,7 +6,7 @@ export const useGetAllComments = (id: string) => {
   return useQuery({
     queryKey: ["all-comments"],
     queryFn: () => getAllComments(id),
-    refetchInterval: 10000,
+    refetchInterval: 1000,
   });
 };
 

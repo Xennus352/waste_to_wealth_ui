@@ -7,6 +7,12 @@ import { Separator } from "@/components/ui/separator";
 import { useGetAllPosts } from "@/react-query/post/post";
 import { PostType } from "@/types/PostType";
 import PostCard from "@/components/cards/PostCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useGetAllOrder } from "@/react-query/order/order";
+import { OrderPayload } from "@/types/OrderPayload";
+import PersonalOrderHistory from "@/components/user/PersonalOrderHistory";
+
+
 
 const Profile = () => {
   // user info
@@ -14,6 +20,9 @@ const Profile = () => {
 
   // get post which user posted
   const { data: postedByCurrentUser } = useGetAllPosts();
+
+  //get order 
+  const { data: orders } = useGetAllOrder()
 
   const currentUserPost = postedByCurrentUser?.filter((post: PostType) => {
     return post?.userId === userInfo?.id;
@@ -36,6 +45,12 @@ const Profile = () => {
     };
     mutate(userData);
   };
+
+
+    // Filter orders for current user as the seller
+    const filteredOrders = orders?.filter(
+      (order: OrderPayload) => order.name === userInfo?.name
+    );
 
   return (
     <div>
@@ -110,10 +125,25 @@ const Profile = () => {
 
       {/* this is the display section of the current user posts  */}
 
-    {/* <p>Posts</p> */}
-      
-      <div>
-        {currentUserPost &&
+      <div className="m-4">
+        <Tabs defaultValue="posts" className="w-full mx-auto">
+          <TabsList className="w-full">
+            <TabsTrigger
+              value="posts"
+              className="flex-1 text-center hover:cursor-pointer"
+            >
+              Manage Posts
+            </TabsTrigger>
+            <TabsTrigger
+              value="history"
+              className="flex-1 text-center hover:cursor-pointer"
+            >
+              Manage Order History
+            </TabsTrigger>
+           
+          </TabsList>
+          <TabsContent value="posts">
+            {currentUserPost &&
           currentUserPost?.map((post: PostType) => {
             return (
               <div key={post.id}>
@@ -121,7 +151,23 @@ const Profile = () => {
               </div>
             );
           })}
+          </TabsContent>
+          <TabsContent value="history">
+            {
+              filteredOrders?.map((order:OrderPayload) => { 
+                return (
+                  <PersonalOrderHistory key={order.id} order={order} />
+                )
+               })
+            }
+          </TabsContent>
+         
+        </Tabs>
       </div>
+
+      
+     
+      
     </div>
   );
 };

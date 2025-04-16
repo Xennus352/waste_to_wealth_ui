@@ -1,9 +1,12 @@
 import { Link, useLocation, useMatch } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 import { Building2, Contact, House, Info, LayoutGrid } from "lucide-react";
+import { useGetCurrentUser } from "@/react-query/user/user";
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { data: currentUser } = useGetCurrentUser();
+
 
   const isAppRoute = useMatch("/app/*");
   const isAdminRoute = useMatch("/dashboard/*");
@@ -21,7 +24,7 @@ const Navbar = () => {
     },
     {
       title: "App",
-      path: "/app/feed",
+      path: currentUser?.role == "ADMIN" ? "/dashboard/user" : "/app/feed",
       icon: <LayoutGrid />,
     },
     {

@@ -6,7 +6,7 @@ export const useGetAllLikes = (postId: string) => {
   return useQuery({
     queryKey: ["all-likes"],
     queryFn: () => getAllLikes(postId),
-    refetchInterval: 10000,
+    refetchInterval: 1000,
   });
 };
 

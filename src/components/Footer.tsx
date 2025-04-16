@@ -64,7 +64,7 @@ const Footer = () => {
               Contact
             </Button>
             <Button
-              className="hover:cursor-pointer"
+              className="hover:cursor-pointer  hidden md:block lg:block xl:block"
               variant={"outline"}
               onClick={() => {
                 navigate("/information");

@@ -1,4 +1,5 @@
 import UserListTable from "@/components/admin/UserListTable";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableHead,
@@ -15,6 +16,12 @@ const UserList = () => {
 
   return (
     <>
+      <div className="flex items-center justify-between m-2">
+        <div className="font-bold text-2xl text-slate-500">User Lists</div>
+      </div>
+
+      <Separator />
+
       {isLoading ? (
         <h2 className="text-center">Fetching the data please wait!</h2>
       ) : isError ? (

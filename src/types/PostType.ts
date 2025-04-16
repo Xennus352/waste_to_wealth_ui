@@ -16,6 +16,20 @@ export interface PostType {
   updatedAt: Date;
 }
 
+export interface HandmadeType {
+  id: string;
+  title: string;
+  descriptionEng: string;
+  descriptionMyan: string;
+  picture?: string | null;
+  createdAt: string; // or Date if you use Date objects
+  updatedAt: string; // or Date
+  userId?: string | null;
+  User?: UserType | null;
+}
+
+
+
 export interface CommentType {
   User: {
     PhoneNumber: string;

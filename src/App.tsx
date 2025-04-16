@@ -22,6 +22,10 @@ import OrderList from "./pages/OrderList";
 import UserList from "./pages/admin/UserList";
 import FeedbackList from "./pages/admin/FeedbackList";
 import HandMade from "./pages/admin/HandMade";
+import CreateNewPost from "./pages/admin/CreateNewPost";
+import PostDetails from "./pages/admin/PostDetails";
+import AddNewGuide from "./pages/admin/AddNewGuide";
+import GuideDetails from "./pages/admin/GuideDetails";
 
 const App = () => {
   return (
@@ -68,11 +72,12 @@ const App = () => {
           <Route path="order" element={<OrderList />} />
           <Route path="feed" element={<AdminFeed />} />
           <Route path="feedback" element={<FeedbackList />} />
-          <Route
-            path="hand-made-guide"
-            element={<HandMade/>}
-          />
+          <Route path="hand-made-guide" element={<HandMade />} />
           <Route path="setting" element={<Profile />} />
+          <Route path="create-new-post" element={<CreateNewPost />} />
+          <Route path="add-new-guide" element={<AddNewGuide />} />
+          <Route path="guide/:id" element={<GuideDetails />} />
+          <Route path="post/:id" element={<PostDetails />} />
         </Route>
 
         {/* error route  */}

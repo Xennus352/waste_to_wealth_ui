@@ -54,7 +54,7 @@ const UserListTable = ({ user }: { user: UserType }) => {
       <TableCell>{user.address}</TableCell>
       <TableCell className="uppercase">
         <Popover>
-          <PopoverTrigger className="cursor-pointer border-l-2 border-r-2  p-1 rounded-lg border-slate-500">
+          <PopoverTrigger className="cursor-pointer border-l-2 border-r-2  p-1 rounded-lg border-sky-500">
             {user.role}
           </PopoverTrigger>
           <PopoverContent>

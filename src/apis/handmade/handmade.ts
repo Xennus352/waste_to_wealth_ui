@@ -1,9 +1,9 @@
 import axios from "@/axios.config";
 
-// get all posts
-export const getAllPosts = async () => {
-  // API endpoint for getting the post
-  const URL = "/api/post";
+// get all guide
+export const getAllGuides = async () => {
+  // API endpoint for getting the guide
+  const URL = "/api/handmade";
 
   try {
     // Include the session token in the Authorization header
@@ -20,27 +20,12 @@ export const getAllPosts = async () => {
   }
 };
 
-// create post
-export const createPost = async (postData: { [key: string]: any }) => {
-  // API for updating user information
-  const URL = `/api/post/create-post`;
-  try {
-    const response = await axios.post(URL, postData);
-    if (response.status == 201) {
-      return response.data; // Return the updated user data
-    } else {
-      throw new Error(`Failed: ${response.data.message}`);
-    }
-  } catch (error: any) {
-    throw new Error(`Error during request: ${error.message}`);
-  }
-};
 
-//get single post
-export const getSinglePost = async (id: string) => {
+//get single guide
+export const getSingleGuide = async (id: string) => {
   try {
-    // API for updating user information
-    const URL = `/api/post/${id}`;
+    // API for updating guide information
+    const URL = `/api/handmade/${id}`;
     const response = await axios.get(URL);
 
     if (response.status == 200) {
@@ -51,15 +36,33 @@ export const getSinglePost = async (id: string) => {
   }
 };
 
-// update post
-export const updatePost = async (postData: {
+// create guide
+export const createGuide = async (postData: { [key: string]: any }) => {
+  // API for creating guide information
+  const URL = "/api/handmade/add-guide";
+
+  try {
+    const response = await axios.post(URL, postData);
+
+    if (response.status == 201) {
+      return response.data; // Return the updated user data
+    } else {
+      throw new Error(`Failed: ${response.data.message}`);
+    }
+  } catch (error: any) {
+    throw new Error(`Error during request: ${error.message}`);
+  }
+};
+
+// update guide
+export const updateGuide = async (postData: {
   id: string;
   [key: string]: any;
 }) => {
   try {
     // API for updating post information
-    const URL = `/api/post/${postData.id}`;
- 
+    const URL = `/api/handmade/${postData.id}`;
+
     const response = await axios.put(URL, postData);
 
     if (response.status == 200) {
@@ -70,11 +73,11 @@ export const updatePost = async (postData: {
   }
 };
 
-// delete post
-export const deletePost = async (id: string) => {
+// delete guide
+export const deleteGuide = async (id: string) => {
   try {
     // API for updating user information
-    const URL = `/api/post/${id}`;
+    const URL = `/api/handmade/${id}`;
     const response = await axios.delete(URL);
 
     if (response.status == 200) {

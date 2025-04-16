@@ -114,7 +114,7 @@ const PostCard = ({ post }: { post: PostType }) => {
   const actionBtn = [
     {
       title: "like",
-      icon1: <Heart color="#3dabf0" />,
+      icon1: <Heart color="#3dabf0" fill="#3dabf0" />,
       icon2: <Heart />,
       active: isLiked,
       count: totalLikes,
@@ -140,7 +140,7 @@ const PostCard = ({ post }: { post: PostType }) => {
   return (
     <Card className="m-2 flex flex-col md:flex-row items-center p-4 space-y-4 md:space-y-0 md:space-x-4">
       <img
-        src={post?.image || image}
+        src={ post?.image ? post?.image : image}
         alt="Post"
         className="w-24 h-24 object-cover rounded"
       />

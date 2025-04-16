@@ -89,14 +89,16 @@ const AdminNav = () => {
         onClick={() => navigate("/")}
       >
         <span className="hidden sm:hidden md:block lg:block xl:block">
-          Website
+          Home
         </span>
         <Webhook />
       </div>
       {/* handle to logout  */}
       <div
         className="btn btn-outline w-full mt-3 flex justify-around p-2 rounded-md hover:cursor-pointer bg-destructive text-white"
-        onClick={() => {logoutHandle()}}
+        onClick={() => {
+          logoutHandle();
+        }}
       >
         <span className="hidden sm:hidden md:block lg:block xl:block ">
           Logout

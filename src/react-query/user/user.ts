@@ -11,7 +11,7 @@ export const useGetAllUsers = () => {
   return useQuery({
     queryKey: ["all-users"],
     queryFn: getAllUsers,
-    refetchInterval: 2000,
+    refetchInterval: 1000,
   });
 };
 

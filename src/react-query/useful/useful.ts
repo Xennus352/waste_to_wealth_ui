@@ -6,7 +6,7 @@ export const useGetAllUseful = (postId: string) => {
   return useQuery({
     queryKey: ["all-useful"],
     queryFn: () => getAllUseful(postId),
-    refetchInterval: 10000,
+    refetchInterval: 1000,
   });
 };
 

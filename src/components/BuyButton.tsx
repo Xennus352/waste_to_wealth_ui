@@ -104,6 +104,7 @@ export default function BuyButton({
                 type="text"
                 defaultValue={currentUserData?.PhoneNumber}
                 name="buyerPhone"
+                required
                 className="text-black placeholder:text-black"
                 placeholder="Phone number"
               />
@@ -111,12 +112,14 @@ export default function BuyButton({
                 type="text"
                 defaultValue={currentUserData?.address}
                 name="buyerAddress"
+                required
                 className="text-black placeholder:text-black"
                 placeholder="Address"
               />
               <Input
                 type="file"
                 name="cashPhoto"
+                required
                 className="text-black placeholder:text-black"
               />
               <DrawerFooter>

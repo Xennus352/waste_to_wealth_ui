@@ -6,8 +6,8 @@ export const useGetAllProducts = () => {
   return useQuery({
     queryKey: ["all-products"],
     queryFn: getAllProducts,
-    refetchInterval: 10000,
-    staleTime: 5000,
+    refetchInterval: 1000,
+
   });
 };
 

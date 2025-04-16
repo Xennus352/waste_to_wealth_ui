@@ -11,22 +11,66 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useCreatePost } from "@/react-query/post/post";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const CreatePostCard = ({ onPostSubmit }: { onPostSubmit: () => void }) => {
   // create post
   const { mutate } = useCreatePost();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [base64Image, setBase64Image] = useState<string | null>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result as string);
+        console.log("Base64 Image:", reader.result); // You can POST this to an API
+      };
+      reader.readAsDataURL(file); // This converts it to base64
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const postData = {
-      title: formData.get("title"),
-      contentBurmese: formData.get("contentBurmese"),
-      type: formData.get("type"),
+
+    const file = formData.get("image") as File;
+
+    const toBase64 = (file: File): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (error) => reject(error);
+      });
     };
-    mutate(postData);
-    onPostSubmit(); // Close the dialog after successful submission
+
+    try {
+      const base64Image = file ? await toBase64(file) : null;
+
+      const postData = {
+        title: formData.get("title"),
+        contentBurmese: formData.get("contentBurmese"),
+        image: base64Image,
+        type: formData.get("type"),
+      };
+
+      mutate(postData, {
+        onSuccess: () => {
+          toast.success("Created Successfully");
+        },
+        onError: () => {
+          toast.error("Something Went Wrong!");
+        },
+      });
+      onPostSubmit(); // Close the dialog after successful submission
+    } catch (error) {
+      console.log("Error converting image to base64:", error);
+    }
   };
+
   // category list
   const categories = [
     {
@@ -66,8 +110,30 @@ const CreatePostCard = ({ onPostSubmit }: { onPostSubmit: () => void }) => {
               border-b md:border-b-0 lg:border-b-0 md:border-r lg:border-r p-2 h-full
               border-slate-500 flex flex-col"
             >
-              <div className="p-4 rounded-md flex md:h-70 lg:h-70 xl:h-70 items-center justify-center flex-grow">
-                <Input type="file" />
+              <div className="p-4 rounded-md cursor-pointer  flex md:h-70 lg:h-70 xl:h-70 items-center justify-center flex-grow">
+                <label
+                  htmlFor="postImg"
+                  className={`${
+                    base64Image ? "cursor-pointer hidden" : "cursor-pointer"
+                  }`}
+                >
+                  Upload photo
+                </label>
+                <Input
+                  name="image"
+                  className="hidden"
+                  id="postImg"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {base64Image && (
+                  <img
+                    src={base64Image}
+                    alt="Preview"
+                    className="mt-4 max-h-40 rounded"
+                  />
+                )}
               </div>
             </div>
             {/* Right side: Form */}

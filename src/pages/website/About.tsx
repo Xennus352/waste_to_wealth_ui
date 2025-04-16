@@ -25,13 +25,30 @@ const About = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="vision">
-          To create a sustainable future where waste is transformed into
-          valuable resources, fostering a circular economy that benefits both
-          people and the planet.
+          To create a sustainable future, we must reimagine waste as a valuable
+          resource, fostering a circular economy that benefits both people and
+          the planet. By designing products for durability, reuse, and
+          recyclability, we can minimize waste and reduce our reliance on finite
+          resources. Embracing innovative technologies and collaborative
+          partnerships, we can transform discarded materials into new products,
+          generating economic opportunities and reducing environmental impact.
+          Education and community engagement are essential to drive behavioral
+          change and support sustainable practices. Together, we can build a
+          resilient, regenerative system where resources circulate continuously,
+          ensuring a healthier, more prosperous future for generations to come.
         </TabsContent>
         <TabsContent value="mission">
-          We aim to create a special place where we empower communities, raise
-          public awareness and give trash or second-hand objects a new purpose.
+          We aim to create a unique space where communities are empowered to
+          take action, public awareness about sustainability is elevated, and
+          discarded or second-hand items are given new life. By fostering
+          collaboration, providing educational opportunities, and encouraging
+          creative reuse, we transform waste into valuable resources. This
+          approach not only reduces environmental impact but also strengthens
+          community bonds and inspires a culture of responsibility and
+          innovation. Through hands-on workshops, awareness campaigns, and
+          accessible recycling initiatives, we enable individuals to actively
+          participate in building a more sustainable and resourceful future for
+          everyone.
         </TabsContent>
         <TabsContent value="about">
           Transforming waste into resources tackles environmental issues and
