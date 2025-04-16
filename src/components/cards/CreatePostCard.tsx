@@ -26,7 +26,7 @@ const CreatePostCard = ({ onPostSubmit }: { onPostSubmit: () => void }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setBase64Image(reader.result as string);
-        console.log("Base64 Image:", reader.result); // You can POST this to an API
+        // console.log("Base64 Image:", reader.result); // You can POST this to an API
       };
       reader.readAsDataURL(file); // This converts it to base64
     }

@@ -26,7 +26,7 @@ export const createProduct = async (postData: { [key: string]: any }) => {
   const URL = `/api/market/create-product`;
   try {
     const response = await axios.post(URL, postData);
-    if (response.status == 200) {
+    if (response.status == 201) {
       return response.data; // Return the updated user data
     } else {
       throw new Error(`Failed: ${response.data.message}`);

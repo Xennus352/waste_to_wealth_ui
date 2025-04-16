@@ -61,7 +61,9 @@ const GuideDetails = () => {
   return (
     <>
       <div className="flex items-center justify-between m-2">
-        <div className="font-bold text-2xl text-slate-500">Post Details</div>
+        <div className="font-bold text-2xl text-slate-500">
+          Guide Post Details
+        </div>
         <div
           onClick={() => navigate(-1)}
           className={`font-bold text-2xl cursor-pointer text-slate-500 ${buttonVariants(
@@ -93,8 +95,15 @@ const GuideDetails = () => {
           </CardHeader>
           <CardContent className="flex flex-col gap-3 ">
             <div>
-              <label htmlFor="postPic">Post Picture</label>
-              <Input name="image" id="postPic" placeholder="file" />
+              <div className="p-4 rounded-md cursor-pointer  flex md:h-70 lg:h-70 xl:h-70 items-center justify-center flex-grow">
+               
+                  <img
+                    src={singlePost.picture}
+                    alt="Preview"
+                    className="mt-4 max-h-40 rounded"
+                  />
+                
+              </div>
             </div>
             <div className="whitespace-pre-wrap ">
               {" "}

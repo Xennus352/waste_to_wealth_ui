@@ -13,6 +13,7 @@ import { ProductType } from "@/types/ProductType";
 import { useGetCurrentUser } from "@/react-query/user/user";
 import { useCreateOrder } from "@/react-query/order/order";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function BuyButton({
   product,
@@ -30,28 +31,59 @@ export default function BuyButton({
   // get current user data
   const { data: currentUserData } = useGetCurrentUser();
 
+  const [base64Image, setBase64Image] = useState<string | null>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result as string);
+        // console.log("Base64 Image:", reader.result); // You can POST this to an API
+      };
+      reader.readAsDataURL(file); // This converts it to base64
+    }
+  };
+
   // form submition
-  const handleOrderSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOrderSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const order = {
-      // seller info
-      productOwnerName: product.User.name,
-      productOwnerPhone: product.User.PhoneNumber,
-      productOwnerAddress: product.User.address,
-      // buyer info
-      userId: formData.get("buyerId"),
-      name: formData.get("buyerName"),
-      buyerPhone: formData.get("buyerPhone"),
-      buyerAddress: formData.get("buyerAddress"),
-      cashTransferPhoto: "",
-      // product info
-      marketId: product.id,
-      quantity: quantity,
-      price: totalPrice,
+
+    const file = formData.get("image") as File;
+
+    const toBase64 = (file: File): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (error) => reject(error);
+      });
     };
-    createOrder(order);
-    navigate(`/app/cash-receipt/${product.id}`);
+
+    const base64Image = file ? await toBase64(file) : null;
+    try {
+      const order = {
+        // seller info
+        productOwnerName: product.User.name,
+        productOwnerPhone: product.User.PhoneNumber,
+        productOwnerAddress: product.User.address,
+        // buyer info
+        userId: formData.get("buyerId"),
+        name: formData.get("buyerName"),
+        buyerPhone: formData.get("buyerPhone"),
+        buyerAddress: formData.get("buyerAddress"),
+        cashTransferPhoto: base64Image,
+        // product info
+        marketId: product.id,
+        quantity: quantity,
+        price: totalPrice,
+      };
+      createOrder(order);
+      navigate(`/app/cash-receipt/${product.id}`);
+    } catch (error) {
+      console.log("Error converting image to base64:", error);
+    }
   };
 
   return (
@@ -60,8 +92,8 @@ export default function BuyButton({
         <Button variant="outline" className="cursor-pointer">
           Check Details!
         </Button>
-      </DrawerTrigger>
-      <DrawerContent className="bg-slate-500 ">
+      </DrawerTrigger> 
+      <DrawerContent className="bg-[#aeb6be]">
         <div className="w-full">
           <form
             className="flex flex-col gap-2 m-2 md:flex-row md:justify-evenly lg:flex-row lg:justify-evenly xl:flex-row xl:justify-evenly"
@@ -116,21 +148,35 @@ export default function BuyButton({
                 className="text-black placeholder:text-black"
                 placeholder="Address"
               />
-              <Input
-                type="file"
-                name="cashPhoto"
-                required
-                className="text-black placeholder:text-black"
-              />
+              <div className="p-4 rounded-md cursor-pointer border  flex md:h-70 lg:h-70 xl:h-70 items-center justify-center flex-grow">
+                <label
+                  htmlFor="postImg"
+                  className={`${
+                    base64Image ? "cursor-pointer hidden" : "cursor-pointer"
+                  }`}
+                >
+                  Upload your cash transfer photo
+                </label>
+                <Input
+                  name="image"
+                  className="hidden"
+                  id="postImg"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {base64Image && (
+                  <img
+                    src={base64Image}
+                    alt="Preview"
+                    className="mt-4 max-h-40 rounded"
+                  />
+                )}
+              </div>
               <DrawerFooter>
                 <Button type="submit" className="cursor-pointer">
                   buy
                 </Button>
-                {/* <DrawerClose asChild>
-                  <Button className="cursor-pointer" variant="outline">
-                    Cancel
-                  </Button>
-                </DrawerClose> */}
               </DrawerFooter>
             </div>
           </form>

@@ -12,9 +12,12 @@ import { useGetAllOrder } from "@/react-query/order/order";
 import { Separator } from "../ui/separator";
 import { Navigate, useNavigate } from "react-router-dom";
 import Loading from "@/utils/Loading";
+import { useGetCurrentUser } from "@/react-query/user/user";
 
 const CashReceiptPdf = () => {
   const { data: orders, isLoading, isError } = useGetAllOrder();
+
+  const { data: currentUser } = useGetCurrentUser();
 
   const formattedDate = new Date(Date.now()).toLocaleDateString("en-US", {
     weekday: "long",
@@ -122,9 +125,13 @@ const CashReceiptPdf = () => {
     <>
       <div className="flex items-center justify-around">
         <div
-          className=" cursor-pointer hover:underline underline-offset-2"
+          className=" cursor-pointer hover:underline text-2xl text-slate-500 font-bold underline-offset-2"
           onClick={() => {
-            navigate("/app/market");
+            if (currentUser.role === "ADMIN") {
+              navigate("/dashboard/market");
+            } else {
+              navigate("/app/market");
+            }
           }}
         >
           Order successful
@@ -135,7 +142,7 @@ const CashReceiptPdf = () => {
             fileName="cash-receipt.pdf"
           >
             {({ loading }) =>
-              loading ? "Loading document..." : "Download now!"
+              loading ? "Loading document..." : "Download Receipt!"
             }
           </PDFDownloadLink>
         </div>

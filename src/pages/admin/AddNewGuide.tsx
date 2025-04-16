@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateGuide } from "@/react-query/guide/guide";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -19,25 +20,57 @@ const AddNewGuide = () => {
 
   const { mutate: createGuide } = useCreateGuide();
 
+  const [base64Image, setBase64Image] = useState<string | null>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result as string);
+        // console.log("Base64 Image:", reader.result); // You can POST this to an API
+      };
+      reader.readAsDataURL(file); // This converts it to base64
+    }
+  };
   // form submition update
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const postData = {
-      title: formData.get("title"),
-      picture: formData.get("image"),
-      descriptionEng: formData.get("contentEnglish"),
-      descriptionMyan: formData.get("contentBurmese"),
+
+    const file = formData.get("image") as File;
+
+    const toBase64 = (file: File): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (error) => reject(error);
+      });
     };
-    createGuide(postData, {
-      onSuccess: () => {
-        toast.success("Post created Successfully!");
-      },
-      onError: (error) => {
+
+    try {
+      const base64Image = file ? await toBase64(file) : null;
+
+      const postData = {
+        title: formData.get("title"),
+        picture: base64Image,
+        descriptionEng: formData.get("contentEnglish"),
+        descriptionMyan: formData.get("contentBurmese"),
+      };
+      createGuide(postData, {
+        onSuccess: () => {
+          toast.success("Post created Successfully!");
+          navigate(-1);
+        },
+        onError: (error) => {
           console.error("🔥 onError called with:", error);
-        toast.error("Failed to create");
-      },
-    });
+          toast.error("Failed to create");
+        },
+      });
+    } catch (error) {
+      console.log("Error converting image to base64:", error);
+    }
   };
   return (
     <div>
@@ -73,9 +106,33 @@ const AddNewGuide = () => {
           </CardHeader>
           <CardContent className="flex flex-col gap-3 ">
             <div>
-              <label htmlFor="postPic">Post Picture</label>
-              <Input name="image" id="postPic" placeholder="file" />
+              <div className="p-4 rounded-md cursor-pointer  flex md:h-70 lg:h-70 xl:h-70 items-center justify-center flex-grow">
+                <label
+                  htmlFor="postImg"
+                  className={`${
+                    base64Image ? "cursor-pointer hidden" : "cursor-pointer"
+                  }`}
+                >
+                  Upload photo
+                </label>
+                <Input
+                  name="image"
+                  className="hidden"
+                  id="postImg"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {base64Image && (
+                  <img
+                    src={base64Image}
+                    alt="Preview"
+                    className="mt-4 max-h-40 rounded"
+                  />
+                )}
+              </div>
             </div>
+
             <div className="whitespace-pre-wrap ">
               {" "}
               <Label htmlFor="english" className="mb-1">

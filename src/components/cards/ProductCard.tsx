@@ -45,7 +45,11 @@ const ProductCard = ({ product }: { product: ProductType }) => {
 
   return (
     <Card className="m-2 flex flex-col md:flex-row items-center p-4 space-y-4 md:space-y-0 md:space-x-4">
-      <img src={image} alt="Post" className="w-24 h-24 object-cover rounded" />
+      <img
+        src={product?.picture ? product?.picture :image}
+        alt="Post"
+        className="w-24 h-24 object-cover rounded"
+      />
       <div className="flex-1">
         <h3 className="text-lg font-bold">{product?.title}</h3>
 

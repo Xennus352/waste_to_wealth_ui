@@ -29,62 +29,64 @@ import GuideDetails from "./pages/admin/GuideDetails";
 
 const App = () => {
   return (
-    <>
+    <div className="flex flex-col h-screen justify-between">
       <Navbar />
-      <Routes>
-        {/* public routes */}
-        <Route path="/hero" element={<Hero />} />
-        <Route index element={<Website />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/information" element={<Information />} />
+      <div>
+        <Routes>
+          {/* public routes */}
+          <Route path="/hero" element={<Hero />} />
+          <Route index element={<Website />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/information" element={<Information />} />
 
-        {/* user routes  */}
-        <Route
-          path="/app"
-          element={
-            <ProtectedRoute>
-              <UserLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="feed" element={<Feed />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path="market" element={<MarketPage />} />
-          <Route path="order" element={<OrderList />} />
-          <Route path="hand-made-guide" element={<HandmadePage />} />
-          <Route path="save" element={<SavePage />} />
-          <Route path="setting" element={<Profile />} />
-          <Route path="cash-receipt/:id" element={<CashReceiptPdf />} />
-        </Route>
+          {/* user routes  */}
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <UserLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="feed" element={<Feed />} />
+            <Route path="search" element={<SearchPage />} />
+            <Route path="market" element={<MarketPage />} />
+            <Route path="order" element={<OrderList />} />
+            <Route path="hand-made-guide" element={<HandmadePage />} />
+            <Route path="save" element={<SavePage />} />
+            <Route path="setting" element={<Profile />} />
+            <Route path="cash-receipt/:id" element={<CashReceiptPdf />} />
+          </Route>
 
-        {/* admin routes */}
-        <Route
-          path="/dashboard"
-          element={
-            // <ProtectedRoute>
-            <AdminLayout />
-            //</ProtectedRoute>
-          }
-        >
-          <Route path="user" element={<UserList />} />
-          <Route path="market" element={<MarketPage />} />
-          <Route path="order" element={<OrderList />} />
-          <Route path="feed" element={<AdminFeed />} />
-          <Route path="feedback" element={<FeedbackList />} />
-          <Route path="hand-made-guide" element={<HandMade />} />
-          <Route path="setting" element={<Profile />} />
-          <Route path="create-new-post" element={<CreateNewPost />} />
-          <Route path="add-new-guide" element={<AddNewGuide />} />
-          <Route path="guide/:id" element={<GuideDetails />} />
-          <Route path="post/:id" element={<PostDetails />} />
-        </Route>
+          {/* admin routes */}
+          <Route
+            path="/dashboard"
+            element={
+              // <ProtectedRoute>
+              <AdminLayout />
+              //</ProtectedRoute>
+            }
+          >
+            <Route path="user" element={<UserList />} />
+            <Route path="market" element={<MarketPage />} />
+            <Route path="order" element={<OrderList />} />
+            <Route path="feed" element={<AdminFeed />} />
+            <Route path="feedback" element={<FeedbackList />} />
+            <Route path="hand-made-guide" element={<HandMade />} />
+            <Route path="setting" element={<Profile />} />
+            <Route path="create-new-post" element={<CreateNewPost />} />
+            <Route path="add-new-guide" element={<AddNewGuide />} />
+            <Route path="guide/:id" element={<GuideDetails />} />
+            <Route path="post/:id" element={<PostDetails />} />
+          </Route>
 
-        {/* error route  */}
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+          {/* error route  */}
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
